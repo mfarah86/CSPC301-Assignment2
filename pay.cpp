@@ -1,65 +1,51 @@
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <cstring>
 #include <fstream>
 #include "person.cpp"
+#include <vector>
 
 using namespace std;
 
-int readData(Person employees[]);
-void writeData(int fileSize, Person employees[]);
+void readData(vector<Person> &emp);
+void writeData(vector<Person> &emp);
 
 int main()
 {
-  Person employees[20];
-  int fileSize = 0;
-  fileSize = readData(employees);
-  writeData(fileSize, employees);
+  vector<Person> employees;
+  readData(employees);
+  writeData(employees);
 
   return 0;
 }
 
-int readData(Person employees[])
+void readData(vector<Person> &emp)
 {
   ifstream inFile;
   string fName;
   string lName;
   float hoursWorked;
   float payRate;
-  int i = 0;
   inFile.open("input.txt");
+  inFile >> fName;
 
   while(!inFile.eof())
     {
+      inFile >> lName >> payRate >> hoursWorked;
+      emp.emplace_back(fName, lName, payRate, hoursWorked);
       inFile >> fName;
-      employees[i].setFirstName(fName);
-      employees[i].getFirstName();
-
-      inFile >> lName;
-      employees[i].setLastName(lName);
-      employees[i].getLastName();
-
-      inFile >> hoursWorked;
-      employees[i].setHoursWorked(hoursWorked);
-      employees[i].getHoursWorked();
-
-      inFile >> payRate;
-      employees[i].setPayRate(payRate);
-      employees[i].getPayRate();
-      i++;
     }
-    i--;
     inFile.close();
-    return i;
-
 }
-void writeData(int fileSize, Person employees[])
+
+void writeData(vector <Person> &emp)
 {
   ofstream outFile;
   outFile.open("output.txt");
-  for(int i = 0; i < fileSize; i++)
+  for(int i = 0; i < emp.size(); i++)
   {
-    outFile << employees[i].fullName() << " " << employees[i].totalPay()<< endl;
+    outFile << emp.at(i).fullName() << " " << fixed << setprecision(2) << emp.at(i).totalPay() << endl;
   }
   outFile.close();
 }
