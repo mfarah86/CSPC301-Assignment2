@@ -3,12 +3,12 @@
 #include "person.h"
 using namespace std;
 
-Person::Person()
+Person::Person(string fName, string lName, float rate, float hours)
 {
-    string firstName = " ";
-    string lastName = " ";
-    float payRate = 0;
-    float hoursWorked = 0;
+    firstName = fName;
+    lastName = lName;
+    payRate = rate;
+    hoursWorked = hours;
 }
 void Person::setLastName(string lName)
 {
@@ -49,6 +49,6 @@ float Person::totalPay()
 }
 string Person::fullName()
 {
-    string lastName = firstName + " " + lastName;
-    return lastName;
+    string fullName = firstName + " " + lastName;
+    return fullName;
 }
